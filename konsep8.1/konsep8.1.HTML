@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 8 – konsep 8.1 </title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --bg: #1a1208;
+    --surface: #231a0a;
+    --surface2: #2d2010;
+    --gold: #f5c842;
+    --gold-dim: #3a2e00;
+    --ember: #e8621a;
+    --ember-dim: #3a1a00;
+    --green: #4caf72;
+    --green-dim: #0d2a1a;
+    --sky: #5bb8d4;
+    --sky-dim: #0a2030;
+    --red: #e04444;
+    --red-dim: #3a0a0a;
+    --purple: #c47ef0;
+    --purple-dim: #2a1040;
+    --text: #f0e6c8;
+    --text-muted: #a08060;
+    --border: #4a3820;
+    --parchment: #f5e8c0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.85;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(245,200,66,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(232,98,26,0.04) 0%, transparent 50%);
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    background: linear-gradient(180deg, #0d0900 0%, #1a1000 40%, #231508 100%);
+    border-bottom: 3px solid var(--gold);
+    padding: 60px 40px 52px;
+    text-align: center;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(245,200,66,0.18) 0%, transparent 65%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5c842' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .chapter-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  .header-icon { font-size: 48px; margin-bottom: 12px; display: block; }
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 5vw, 54px);
+    font-weight: 900;
+    color: var(--parchment);
+    line-height: 1.15;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(245,200,66,0.3);
+  }
+  header h1 span { color: var(--gold); }
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--ember);
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  header p.tagline {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 16px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  .progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--ember));
+    width: 0%; z-index: 999;
+    transition: width 0.1s;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 920px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── QUEST MAP (TOC) ── */
+  .quest-map {
+    background: var(--surface);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 30px 36px;
+    margin: 44px 0;
+    position: relative;
+  }
+  .quest-map::before {
+    content: '🗺️';
+    position: absolute; top: -18px; left: 24px;
+    background: var(--bg); padding: 0 8px; font-size: 24px;
+  }
+  .quest-map h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .quest-map ol { padding-left: 22px; }
+  .quest-map li { margin: 8px 0; }
+  .quest-map a {
+    color: var(--sky);
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s;
+  }
+  .quest-map a:hover { color: var(--gold); }
+  .quest-map .quest-num {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--ember);
+    margin-right: 6px;
+  }
+
+  /* ── SECTION ── */
+  section { margin: 52px 0; }
+
+  .stage-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .stage-badge.sky { background: var(--sky-dim); border-color: var(--sky); color: var(--sky); }
+  .stage-badge.ember { background: var(--ember-dim); border-color: var(--ember); color: var(--ember); }
+  .stage-badge.purple { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
+  .stage-badge.green { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+
+  h2.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 3.5vw, 32px);
+    font-weight: 700;
+    color: var(--parchment);
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+  h3.sub-title {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 32px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  p { margin-bottom: 14px; color: var(--text); }
+
+  /* ── TERM STYLES ── */
+  .term { color: var(--gold); font-weight: 600; font-style: italic; }
+  .term-green { color: var(--green); font-weight: 600; }
+  .term-sky { color: var(--sky); font-weight: 600; }
+  .term-purple { color: var(--purple); font-weight: 600; }
+  .term-ember { color: var(--ember); font-weight: 600; }
+  .en { color: var(--text-muted); font-style: italic; font-size: 0.9em; }
+
+  /* ── SCROLL (info boxes) ── */
+  .scroll-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .scroll-box::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; border-radius: 10px 0 0 10px;
+  }
+  .scroll-box.gold::before { background: var(--gold); }
+  .scroll-box.sky::before { background: var(--sky); }
+  .scroll-box.ember::before { background: var(--ember); }
+  .scroll-box.red::before { background: var(--red); }
+  .scroll-box.purple::before { background: var(--purple); }
+  .scroll-box.green::before { background: var(--green); }
+  .scroll-box h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .scroll-box.gold h4 { color: var(--gold); }
+  .scroll-box.sky h4 { color: var(--sky); }
+  .scroll-box.ember h4 { color: var(--ember); }
+  .scroll-box.red h4 { color: var(--red); }
+  .scroll-box.purple h4 { color: var(--purple); }
+  .scroll-box.green h4 { color: var(--green); }
+  .scroll-box p { margin-bottom: 8px; font-size: 16px; }
+
+  /* ── PATHWAY / TRAIL ── */
+  .trail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 18px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+  .trail::before {
+    content: '⚔️ Jalur Reaksi';
+    position: absolute; top: -13px; left: 20px;
+    background: var(--bg); padding: 0 8px;
+    font-family: 'Cinzel', serif; font-size: 11px;
+    color: var(--gold); letter-spacing: 2px;
+  }
+  .trail-node {
+    background: var(--green-dim);
+    border: 2px solid var(--green);
+    color: var(--green);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 85px;
+    line-height: 1.4;
+  }
+  .trail-node.start { background: var(--sky-dim); border-color: var(--sky); color: var(--sky); }
+  .trail-node.end { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+  .trail-node.enzyme { background: var(--ember-dim); border-color: var(--ember); color: var(--ember); }
+  .trail-arrow { color: var(--gold); font-size: 22px; }
+
+  /* ── BATTLE TABLE (compare table) ── */
+  .battle-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 22px 0;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .battle-table th {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 13px 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: left;
+  }
+  .battle-table th:first-child { color: var(--gold); }
+  .battle-table th:nth-child(2) { color: var(--red); }
+  .battle-table th:nth-child(3) { color: var(--green); }
+  .battle-table td {
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    vertical-align: top;
+    color: var(--text);
+  }
+  .battle-table tr:nth-child(even) td { background: var(--surface); }
+  .battle-table tr:hover td { background: rgba(245,200,66,0.04); }
+
+  /* ── MAGIC FORMULA ── */
+  .rune-box {
+    background: #0d0900;
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 24px 32px;
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+    box-shadow: 0 0 30px rgba(245,200,66,0.1), inset 0 0 30px rgba(245,200,66,0.03);
+  }
+  .rune-box::before {
+    content: '✦';
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: #0d0900; padding: 0 10px;
+    color: var(--gold); font-size: 20px;
+  }
+  .formula {
+    font-family: 'Cinzel', serif;
+    font-size: 30px;
+    color: var(--gold);
+    letter-spacing: 6px;
+    text-shadow: 0 0 20px rgba(245,200,66,0.5);
+  }
+  .formula-label {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.8;
+  }
+
+  /* ── QUEST BOSS (Concept Check) ── */
+  .boss-arena {
+    background: linear-gradient(135deg, #0d0900, #1a0a00, #0d0900);
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 36px;
+    margin: 52px 0;
+    box-shadow: 0 0 40px rgba(245,200,66,0.08);
+  }
+  .boss-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 20px;
+  }
+  .boss-icon {
+    font-size: 40px; line-height: 1;
+  }
+  .boss-header-text h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1.2;
+  }
+  .boss-header-text p {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-style: italic;
+    margin: 4px 0 0;
+  }
+  .quest-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 26px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .quest-block::before {
+    content: attr(data-num);
+    position: absolute; top: -12px; left: 20px;
+    background: var(--ember); color: #fff;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 12px;
+    border-radius: 10px;
+  }
+  .question-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+  .question-text {
+    font-weight: 600;
+    color: var(--parchment);
+    margin-bottom: 16px;
+    font-style: italic;
+    font-size: 16px;
+  }
+  .answer-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .answer-text { color: var(--text); font-size: 16px; }
+  .victory-box {
+    background: var(--green-dim);
+    border-left: 4px solid var(--green);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    color: var(--text);
+    font-size: 15px;
+  }
+  .victory-box strong { color: var(--green); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    margin: 44px 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), var(--gold), var(--border), transparent);
+  }
+
+  /* ── LORE CARDS (Key Terms) ── */
+  .lore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 22px 0;
+  }
+  .lore-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .lore-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .lore-card .lore-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .lore-card .lore-en {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+  .lore-card .lore-def {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTNOTE ── */
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-style: italic;
+  }
+  footer span { color: var(--gold); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { padding: 44px 20px 40px; }
+    .container { padding: 0 16px 60px; }
+    .quest-map { padding: 22px 20px; }
+    .boss-arena { padding: 24px 18px; }
+    .trail { flex-direction: column; }
+    .battle-table { font-size: 13px; }
+    .battle-table th, .battle-table td { padding: 8px 10px; }
+    .rune-box { padding: 18px 14px; }
+    .formula { font-size: 22px; letter-spacing: 3px; }
+  }
+  #istirahat {
+    min-height:5vh;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #0d2a1a;
+  }
+  .spotify-btn{
+    display:block;
+    width:fit-content;
+    margin:10px auto 0;
+}
+
+.spotify-btn img{
+    width: 100px;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="pgbar"></div>
+
+<header>
+  <div class="chapter-label">⚔️ Chapter 8- konsep 8.1 · Biology · Campbell · alay Edition</div>
+  <span class="header-icon">🧬</span>
+  <h1>Petualangan ke Dunia<br><span>Metabolisme</span></h1>
+  <div class="header-sub">The Grand Quest of Life's Chemistry</div>
+  <p class="tagline">
+   opening  "Setiap reaksi kimia dalam tubuhmu adalah satu langkah dalam petualangan terbesar di alam semesta — kehidupan itu sendiri."
+  </p>
+</header>
+
+<div class="container">
+
+  <!-- ── QUEST MAP ── -->
+  <nav class="quest-map">
+    <h2>🗺️ Peta Petualangan — Quest Map</h2>
+    <ol>
+      <li><span class="quest-num">I.</span><a href="#concept81">Concept 8.1 — Metabolisme: Transformasi Materi & Energi</a></li>
+      <li><span class="quest-num">II.</span><a href="#jalur">Jalur Metabolik — The Metabolic Pathways</a></li>
+      <li><span class="quest-num">III.</span><a href="#katanab">Katabolisme vs Anabolisme — The Two Forces</a></li>
+      <li><span class="quest-num">IV.</span><a href="#energi">Bentuk-Bentuk Energi — Forms of Energy</a></li>
+      <li><span class="quest-num">V.</span><a href="#hukum">Hukum Termodinamika — Laws of the Universe</a></li>
+      <li><span class="quest-num">VI.</span><a href="#entropi">Entropi dan Keteraturan Biologis — Entropy & Order</a></li>
+      <li><span class="quest-num">VII.</span><a href="#check">⚔️ Boss Fight — Jawaban Concept Check 8.1</a></li>
+      <li><span class="quest-num">VIII.</span><a href="#lore">📖 Lore Book — Glosarium Kata Kunci</a></li>
+      <li><span class="quest-num">IX.</span><a href="#Istirahat"> istirahat</a></li>
+    </ol>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       CONCEPT 8.1
+  ══════════════════════════════════════ -->
+  <section id="concept81">
+    <div class="stage-badge">⚗️ Stage I · Concept 8.1</div>
+    <h2 class="section-title">Metabolisme: Transformasi Materi dan Energi<br><span style="font-size:0.6em; color:var(--text-muted); font-family:'Crimson Text',serif; font-style:italic;">Organisms Transform Matter and Energy</span></h2>
+
+    <p>
+      welcome to <span class="term">Quest Metabolisme</span> petualangan memahami mekanisme kehidupan di tingkat paling dasar. <em>basa basi</em>
+      <span class="term">Metabolisme</span> <span class="en">(metabolism)</span>, dari bahasa Yunani <em>metabole</em> yang berarti <em>perubahan</em>, adalah 
+      <strong>totalitas seluruh reaksi kimia</strong> <span class="en">(the totality of all chemical reactions)</span> yang terjadi di dalam suatu organisme.
+    </p>
+    <p>
+      Metabolisme sebuah <em>jaringan besar reaksi yang saling terhubung dan teratur</em>, 
+      memungkinkan makhluk hidup tumbuh, berkembang, bergerak, dan bertahan hidup. <em>bahasa bayinya AI: Bayangkan seperti sebuah kota raksasa yang aktif 
+      24 jam — ratusan "jalan raya" reaksi kimia bekerja secara serentak di dalam satu sel kecil yang tak kasat mata.</em> 
+    </p>
+    <p>
+      Metabolisme adalah <span class="term-green">sifat emergen kehidupan</span> <span class="en">(an emergent property of life)</span> — muncul dari 
+      interaksi teratur antar-molekul di dalam sel. Ini adalah bukti bahwa keseluruhan jauh lebih dahsyat daripada sekadar jumlah bagian-bagiannya.
+    </p>
+
+    <div class="scroll-box gold">
+      <h4>📜 Definisi Kunci — Key Definitions</h4>
+      <p><strong>Metabolisme</strong> <span class="en">(Metabolism)</span> = totalitas reaksi kimia organisme; mengatur sumber daya materi dan energi sel.</p>
+      <p><strong>Bioenergetika</strong> <span class="en">(Bioenergetics)</span> = studi tentang bagaimana energi mengalir melalui organisme hidup.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       JALUR METABOLIK
+  ══════════════════════════════════════ -->
+  <section id="jalur">
+    <h3 class="sub-title">🛤️ Jalur Metabolik — Metabolic Pathways</h3>
+
+    <p>
+      sekarang kita mau bertulangan, kita butuh peta metabolisme itu seperti <em>peta petualangan yang sangat kompleks</em> — banyak jalan setapak reaksi kimia saling berpotongan. 
+      Reaksi-reaksi ini tersusun dalam <span class="term">jalur metabolik</span> <span class="en">(metabolic pathways)</span>. 
+      Dalam sebuah jalur metabolik, suatu <strong>molekul spesifik diubah secara bertahap</strong> melalui serangkaian langkah yang terdefinisi, 
+      layaknya sebuah misi bertingkat yang menghasilkan "loot" berupa produk akhir tertentu.
+    </p>
+
+    <div class="trail">
+      <div class="trail-node start">Molekul Awal<br>(A)</div>
+      <div class="trail-arrow">⟶</div>
+      <div class="trail-node enzyme">Enzim 1<br>→ B</div>
+      <div class="trail-arrow">⟶</div>
+      <div class="trail-node enzyme">Enzim 2<br>→ C</div>
+      <div class="trail-arrow">⟶</div>
+      <div class="trail-node enzyme">Enzim 3<br>→ D</div>
+      <div class="trail-arrow">⟶</div>
+      <div class="trail-node end">Produk<br>Akhir</div>
+    </div>
+
+    <p>
+      Setiap langkah dalam jalur metabolik dikatalisis oleh <span class="term">enzim</span> <span class="en">(enzyme)</span> — 
+      makromolekul (umumnya protein) yang mempercepat reaksi kimia <em>tanpa ikut habis</em> dalam reaksi tersebut. 
+      Enzim adalah <em>hero sejati</em> dalam petualangan kimia kehidupan: mereka bekerja tanpa kenal lelah, 
+      memangkas "waktu tempuh" reaksi dari ribuan tahun menjadi hanya sepersekian detik.
+    </p>
+    <p>
+      Tanpa enzim, kebanyakan reaksi metabolik akan berlangsung terlalu lambat untuk menopang kehidupan. 
+      Enzim-enzim yang mengatur jalur ini bekerja seperti <em>pemandu petualangan</em> — menyeimbangkan 
+      pasokan dan permintaan metabolik sesuai kebutuhan sel saat itu. kalau di buku sih katanya seperti lampu lalu lintas enzim ini yang kontrol lalu lintas
+    </p>
+
+    <div class="scroll-box sky">
+      <h4>⚡ Poin Kunci: Enzim — The Catalysts</h4>
+      <p>Enzim adalah <strong>biokatalis</strong> <span class="en">(biological catalyst)</span> — mempercepat reaksi kimia di sel.</p>
+      <p>Setiap langkah dalam jalur metabolik dikatalisis oleh enzim yang <em>spesifik</em> <span class="en">(highly specific)</span>.</p>
+      <p>Enzim tidak dihabiskan <span class="en">(not consumed)</span> dalam reaksi, sehingga bisa digunakan berulang kali — seperti senjata legendaris yang tidak aus.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       KATABOLISME VS ANABOLISME
+  ══════════════════════════════════════ -->
+  <section id="katanab">
+    <h3 class="sub-title">⚔️ Dua Kekuatan Besar Katabolisme vs Anabolisme</h3>
+
+    <p>
+     basa basi lagi :Dalam dunia metabolisme, ada dua kekuatan besar yang saling melengkapi — seperti api dan air, atau serangan dan pertahanan. 
+      Jalur metabolik terbagi menjadi dua kategori berdasarkan arah transformasi energinya. POkoknya ada yang membentuk dan memecah
+    </p>
+
+    <table class="battle-table">
+      <thead>
+        <tr>
+          <th>⚖️ Aspek</th>
+          <th>🔴 Katabolisme (Catabolic Pathway)</th>
+          <th>🟢 Anabolisme (Anabolic Pathway)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Definisi</strong></td>
+          <td>Jalur pemecahan / degradasi molekul kompleks → molekul sederhana</td>
+          <td>Jalur pembangunan molekul kompleks dari molekul sederhana</td>
+        </tr>
+        <tr>
+          <td><strong>Energi</strong></td>
+          <td>Melepaskan energi <span class="en">(releases energy)</span></td>
+          <td>Mengonsumsi / membutuhkan energi <span class="en">(requires energy)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Arah Energi</strong></td>
+          <td>"Downhill" — menuruni lanskap energi</td>
+          <td>"Uphill" — mendaki lanskap energi</td>
+        </tr>
+        <tr>
+          <td><strong>Contoh Utama</strong></td>
+          <td>Respirasi seluler — memecah glukosa + O₂ → CO₂ + H₂O + energi</td>
+          <td>Fotosintesis; sintesis protein dari asam amino; sintesis asam amino dari bahan sederhana</td>
+        </tr>
+        <tr>
+          <td><strong>Nama Lain</strong></td>
+          <td>Breakdown pathways (jalur perombakan)</td>
+          <td>Biosynthetic pathways (jalur biosintesis)</td>
+        </tr>
+        <tr>
+          <td><strong>Peran</strong></td>
+          <td>Menyediakan energi untuk kerja sel: gerak silia, transpor membran, dll.</td>
+          <td>Membangun komponen sel, jaringan, dan organisme baru</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="scroll-box ember">
+      <h4>🔥 Hubungan Katabolisme & Anabolisme — The Energy Cycle</h4>
+      <p>
+        Energi yang dilepaskan oleh jalur katabolik <em>(downhill)</em> dapat disimpan dalam molekul seperti ATP, 
+        kemudian digunakan untuk menggerakkan jalur anabolik <em>(uphill)</em>. Keduanya saling bergantung — 
+        seperti <em>"mendaki gunung dengan tenaga yang dikumpulkan dari lembah sebelumnya."</em> 
+        Inilah siklus energi kehidupan yang tak pernah berhenti.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       BENTUK ENERGI
+  ══════════════════════════════════════ -->
+  <section id="energi">
+    <h3 class="sub-title">💡 Bentuk-Bentuk Energi — Forms of Energy<span style="font-size:0.6em; color:var(--text-muted); font-family:'Crimson Text',serif; font-style:italic;">phicikaa timee</span><p></h3>
+
+    <p>
+      <span class="term">Energi</span> <span class="en">(energy)</span> adalah kapasitas untuk menyebabkan perubahan. 
+      Dalam kehidupan, beberapa bentuk energi dapat digunakan untuk melakukan <span class="term-sky">kerja</span> <span class="en">(work)</span>
+      yaitu menggerakkan materi melawan gaya-gaya yang berlawanan seperti gravitasi dan gesekan. 
+      Mari kita jelajahi "arsenal" energi yang ada di alam semesta:
+    </p>
+
+    <div class="lore-grid">
+      <div class="lore-card">
+        <div class="lore-name">⚡ Energi Kinetik</div>
+        <div class="lore-en">Kinetic Energy</div>
+        <div class="lore-def">Energi yang dimiliki benda karena gerakannya. Contoh: gerakan bola biliar, air mengalir, kontraksi otot saat berlari.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🌡️ Energi Panas</div>
+        <div class="lore-en">Thermal Energy / Heat</div>
+        <div class="lore-def">Bentuk energi kinetik terkait gerakan acak atom/molekul. Transfer energi panas dari satu benda ke benda lain disebut <em>panas (heat)</em>.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">☀️ Energi Cahaya</div>
+        <div class="lore-en">Light Energy</div>
+        <div class="lore-def">Jenis energi yang dapat dimanfaatkan untuk kerja — contoh utamanya: menggerakkan fotosintesis pada tumbuhan hijau.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🏔️ Energi Potensial</div>
+        <div class="lore-en">Potential Energy</div>
+        <div class="lore-def">Energi tersimpan karena posisi atau struktur suatu benda. Contoh: air di balik bendungan, benda di ketinggian.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">⚗️ Energi Kimia</div>
+        <div class="lore-en">Chemical Energy</div>
+        <div class="lore-def">Bentuk energi potensial yang tersimpan dalam susunan elektron dalam ikatan kimia antar-atom — sumber utama bahan bakar kehidupan.</div>
+      </div>
+    </div>
+
+    <div class="scroll-box green">
+      <h4>🐻 Contoh Nyata: Si Beruang Coklat — Brown Bear in Action</h4>
+      <p>
+        Saat seekor beruang berlari mengejar mangsa, ia mengubah <strong>energi kimia</strong> <span class="en">(chemical energy)</span> 
+        dari molekul organik dalam makanannya menjadi <strong>energi kinetik</strong> <span class="en">(kinetic energy)</span> 
+        (gerakan otot) dan <strong>energi panas</strong> <span class="en">(heat)</span>. 
+        Panas ini dilepas ke lingkungan, meningkatkan entropi alam semesta. 
+        Beruang coklat bisa berlari hingga <strong>35 mph (56 km/jam)</strong> — secepat kuda pacu! 
+        Semua itu berkat transformasi energi kimia yang luar biasa efisien.
+      </p>
+    </div>
+
+    <h3 class="sub-title">🌿 Organisme sebagai Transformator Energi — Energy Transformers</h3>
+    <p>
+      Organisme bukan pencipta energi — mereka adalah <span class="term">transformator energi</span> <span class="en">(energy transformers)</span>. 
+      Mereka menerima energi dalam satu bentuk dan mengubahnya menjadi bentuk lain untuk melakukan kerja:
+    </p>
+    <ul style="padding-left: 26px; margin-bottom: 16px; color: var(--text);">
+      <li style="margin-bottom: 10px;">
+        <strong>Seorang penyelam wanita</strong> yang memanjat tangga menuju platform lompatan 
+        melepaskan <em>energi kimia</em> dari makanan, menggunakannya untuk kerja otot (energi kinetik + energi potensial gravitasi).
+      </li>
+      <li style="margin-bottom: 10px;">
+        <strong>Tumbuhan</strong> menyerap <em>energi cahaya</em> dari matahari dan menggunakannya dalam fotosintesis 
+        untuk membangun molekul organik (energi kimia tersimpan).
+      </li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       HUKUM TERMODINAMIKA
+  ══════════════════════════════════════ -->
+  <section id="hukum">
+    <h3 class="sub-title">📖 Hukum-Hukum Termodinamika — Laws of Thermodynamics</h3>
+
+    <p>
+      <span class="term">Termodinamika</span> <span class="en">(thermodynamics)</span> adalah studi tentang transformasi energi dalam suatu 
+      kumpulan materi yang disebut <span class="term-sky">sistem</span> <span class="en">(system)</span>. 
+      <em>Lingkungan</em> <span class="en">(surroundings)</span> adalah sisa alam semesta di luar sistem. 
+      Hukum-hukum termodinamika adalah <em>"peraturan besi" alam semesta</em> — tidak ada satu pun makhluk, 
+      mesin, atau teknologi yang bisa melanggarnya.
+    </p>
+
+    <div class="scroll-box sky">
+      <h4>🔬 Jenis-Jenis Sistem — Types of Systems</h4>
+      <p><strong>Sistem terisolasi</strong> <span class="en">(isolated system)</span>: tidak bisa bertukar energi maupun materi dengan lingkungan. Contoh: cairan dalam termos ideal.</p>
+      <p><strong>Sistem terbuka</strong> <span class="en">(open system)</span>: dapat bertukar energi dan materi dengan lingkungan. <em>Organisme adalah sistem terbuka.</em></p>
+    </div>
+
+    <h3 class="sub-title">⚖️ Hukum Pertama Termodinamika — First Law of Thermodynamics</h3>
+
+    <div class="scroll-box gold">
+      <h4>✨ Prinsip Kekekalan Energi — Conservation of Energy</h4>
+      <p style="font-style: italic; font-size: 17px; color: var(--parchment);">
+        "Energi alam semesta bersifat konstan. Energi dapat dipindahkan dan ditransformasi, tetapi tidak dapat diciptakan atau dimusnahkan."
+      </p>
+      <p style="font-style: italic; font-size: 14px; color: var(--text-muted); margin-top: 4px;">
+        "The energy of the universe is constant. Energy can be transferred and transformed, but it cannot be created or destroyed."
+      </p>
+      <p style="margin-top: 12px;">
+        Hukum ini juga disebut <strong>prinsip kekekalan energi</strong>. Perusahaan listrik tidak <em>membuat</em> energi — 
+        mereka hanya mengubah bentuknya agar nyaman digunakan. Tumbuhan mengubah energi cahaya matahari menjadi energi kimia — 
+        bukan menciptakan energi baru. Tidak ada yang bisa luput dari hukum pertama ini.
+      </p>
+    </div>
+
+    <h3 class="sub-title">🌀 Hukum Kedua Termodinamika — Second Law of Thermodynamics</h3>
+    <p>pertanyaan diskusi dulu guys: Jika energi tidak dapat dihancurkan, kenapa organisme tidak dapat mendaur ulang, maka jawab pertanyaan ini! Tetangga dari saudara Ririn menyalakan lampu sebagai penerangan, lampu itu menghasilkan panas, apakah energi panas itu bisa dipakai lagi untuk menyalkan lampu? </p>
+
+    <div class="scroll-box red">
+      <h4>💀 Entropi Selalu Meningkat — Entropy Always Increases</h4>
+      <p style="font-style: italic; font-size: 17px; color: var(--parchment);">
+        "Setiap transfer atau transformasi energi meningkatkan entropi alam semesta."
+      </p>
+      <p style="font-style: italic; font-size: 14px; color: var(--text-muted); margin-top: 4px;">
+        "Every energy transfer or transformation increases the entropy of the universe."
+      </p>
+      <p style="margin-top: 12px;">
+        Energi tidak bisa digunakan ulang terus-menerus karena setiap transformasi mengubah sebagian energi menjadi 
+        <strong>energi panas</strong> <span class="en">(heat)</span> yang tidak dapat lagi digunakan untuk kerja. 
+        Energi tersebut menyebar ke lingkungan, meningkatkan kekacauan (entropi) alam semesta. <em>tolong fokus sama entropi entropi ini YGY</em>
+        Hanya sebagian kecil energi kimia yang diubah menjadi kerja berguna — sebagian besar terlepas sebagai panas.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       ENTROPI
+  ══════════════════════════════════════ -->
+  <section id="entropi">
+    <h3 class="sub-title">🌪️ Entropi dan Keteraturan Biologis — Entropy & Biological Order</h3>
+
+    <p>
+      <span class="term">Entropi</span> <span class="en">(entropy, S)</span> adalah ukuran ketidakteraturan molekuler atau 
+      <em>kekacauan</em> <span class="en">(randomness/disorder)</span> dalam suatu sistem. 
+      Semakin acak susunan materi, semakin tinggi entropinya. 
+      Bayangkan entropi seperti tingkat "kekacauan ruangan" — ruangan yang berantakan memiliki entropi lebih tinggi 
+      dibanding ruangan yang rapi dan teratur.
+    </p>
+
+    <div class="scroll-box ember">
+      <h4>🏚️ Analogi Fisik Entropi</h4>
+      <p>
+        Disintegrasi fisik sebuah bangunan yang tidak terawat adalah analogi baik untuk peningkatan entropi. 
+        Namun dalam sains, entropi lebih abstrak — berupa peningkatan jumlah panas dan bentuk materi yang 
+        kurang teratur. Bangunan yang terawat (entropi rendah) membutuhkan terus-menerus input energi untuk dipertahankan.
+      </p>
+    </div>
+
+    <h3 class="sub-title">⚡ Proses Spontan dan Nonspontan — Spontaneous & Nonspontaneous Processes</h3>
+
+    <p>
+      Suatu proses yang dengan sendirinya mengarah pada <strong>penurunan entropi</strong> sistem disebut 
+      <span class="term">nonspontan</span> <span class="en">(nonspontaneous)</span> — hanya akan terjadi jika ada pasokan energi dari luar.
+    </p>
+    <p>
+      Sebaliknya, proses yang mengarah pada <strong>peningkatan entropi total</strong> disebut 
+      <span class="term-green">proses spontan</span> <span class="en">(spontaneous process)</span> — terjadi tanpa input energi. 
+      Perlu diingat: "spontan" <em>tidak berarti cepat</em> — besi berkarat (berlangsung lambat) tetap spontan karena meningkatkan entropi.
+    </p>
+
+    <table class="battle-table">
+      <thead>
+        <tr>
+          <th>⚖️ Aspek</th>
+          <th>🔴 Nonspontan (Nonspontaneous)</th>
+          <th>🟢 Spontan (Spontaneous)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Arah entropi</td>
+          <td>Menurunkan entropi sistem</td>
+          <td>Meningkatkan entropi alam semesta secara keseluruhan</td>
+        </tr>
+        <tr>
+          <td>Input energi</td>
+          <td>Membutuhkan input energi dari luar</td>
+          <td>Tidak butuh input energi — berlangsung sendiri</td>
+        </tr>
+        <tr>
+          <td>Kecepatan</td>
+          <td>—</td>
+          <td>Bisa sangat lambat (besi berkarat) atau sangat cepat (ledakan)</td>
+        </tr>
+        <tr>
+          <td>Contoh</td>
+          <td>Air mengalir ke atas (pompa aktif); sintesis molekul kompleks</td>
+          <td>Air mengalir ke bawah; gula melarut; besi berkarat; difusi</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">🌿 Paradoks Kehidupan: Keteraturan di Tengah Kekacauan</h3>
+    <p>
+      Kehidupan tampak seperti melanggar hukum termodinamika kedua karena organisme menciptakan 
+      struktur yang sangat teratur dan kompleks — protein, tulang, organ, otak. 
+      Tapi ini bukan pelanggaran! Organisme <strong>meningkatkan entropi lingkungannya</strong> 
+      saat membangun keteraturan internalnya. Entropi <em>total alam semesta</em> (organisme + 
+      lingkungan) tetap meningkat. Hukum termodinamika selalu menang.
+    </p>
+
+    <div class="scroll-box purple">
+      <h4>🧬 Evolusi dan Hukum Kedua — Evolution & The Second Law</h4>
+      <p>
+        Organisme kompleks berevolusi dari nenek moyang yang lebih sederhana. 
+        Peningkatan keteraturan biologis ini <strong>tidak melanggar</strong> <span class="en">(does not violate)</span> 
+        hukum kedua karena entropi total alam semesta (organisme + lingkungan) tetap meningkat. 
+        Organisme adalah <em>"pulau entropi rendah"</em> <span class="en">("islands of low entropy")</span> 
+        dalam alam semesta yang terus meningkat entropinya — dipertahankan oleh aliran energi yang konstan dari lingkungan.
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════
+       BOSS FIGHT — CONCEPT CHECK
+  ══════════════════════════════════════ -->
+  <section id="check">
+    <div class="boss-arena">
+      <div class="boss-header">
+        <div class="boss-icon">⚔️</div>
+        <div class="boss-header-text">
+          <h2>BOSS FIGHT — Concept Check 8.1</h2>
+          <p>Uji pemahamanmu! Jawaban lengkap dan rinci tersedia di bawah setiap pertanyaan.</p>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="quest-block" data-num="⚔️ QUEST 1 · MAKE CONNECTIONS">
+        <div class="question-label" style="margin-top: 20px;">Pertanyaan — Make Connections</div>
+        <p class="question-text">
+          Bagaimana hukum kedua termodinamika membantu menjelaskan difusi suatu zat melintasi membran?
+          <br><span class="en" style="font-size:14px;">"How does the second law of thermodynamics help explain the diffusion of a substance across a membrane?"</span>
+        </p>
+        <div class="answer-label">✅ JAWABAN LENGKAP — FULL ANSWER</div>
+        <div class="answer-text">
+          <p>
+            Hukum kedua termodinamika menyatakan bahwa setiap proses cenderung meningkatkan entropi 
+            <span class="en">(entropy)</span> alam semesta. <strong>Difusi adalah proses spontan</strong> 
+            <span class="en">(spontaneous process)</span> karena terjadi ke arah yang meningkatkan entropi.
+          </p>
+          <p>
+            Bayangkan sebuah membran dengan konsentrasi tinggi zat terlarut di satu sisi 
+            (keadaan lebih teratur, entropi rendah) dan konsentrasi rendah di sisi lain. 
+            Molekul-molekul bergerak secara acak <span class="en">(random motion)</span>. 
+            Secara statistik, lebih banyak molekul berpindah dari daerah 
+            <strong>konsentrasi tinggi → konsentrasi rendah</strong> karena itulah keadaan yang 
+            lebih acak dan memiliki entropi lebih tinggi.
+          </p>
+          <p>
+            Dengan kata lain, difusi berlangsung spontan karena bergerak menuju kesetimbangan konsentrasi 
+            <span class="en">(concentration equilibrium)</span>, yang merupakan keadaan dengan entropi lebih tinggi 
+            dan energi bebas lebih rendah (ΔG &lt; 0). Tanpa input energi, zat tidak bisa bergerak melawan 
+            gradien konsentrasi — itu adalah transpor aktif <span class="en">(active transport)</span>, 
+            yang nonspontan dan memerlukan energi seperti ATP.
+          </p>
+          <div class="victory-box">
+            <strong>🏆 Kesimpulan:</strong> Difusi adalah proses spontan yang konsisten dengan hukum kedua termodinamika 
+            karena bergerak ke arah yang meningkatkan entropi sistem dan mengurangi energi bebas 
+            <span class="en">(decreases free energy, ΔG &lt; 0)</span>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quest-block" data-num="⚔️ QUEST 2">
+        <div class="question-label" style="margin-top: 20px;">Pertanyaan — Transformasi Energi</div>
+        <p class="question-text">
+          Jelaskan bentuk-bentuk energi yang ditemukan dalam sebuah apel saat ia tumbuh di pohon, 
+          kemudian jatuh, lalu dicerna oleh seseorang.
+          <br><span class="en" style="font-size:14px;">"Describe the forms of energy found in an apple growing on a tree, falling to the ground, then being digested."</span>
+        </p>
+        <div class="answer-label">✅ JAWABAN — ANSWER</div>
+        <div class="answer-text">
+          <p>Perjalanan si apel adalah petualangan transformasi energi yang sempurna:</p>
+
+          <div class="scroll-box green" style="margin: 14px 0;">
+            <h4>🌱 Fase 1: Apel Tumbuh di Pohon — Growing on the Tree</h4>
+            <p>
+              Pohon menyerap <strong>energi cahaya</strong> <span class="en">(light energy)</span> dari matahari melalui fotosintesis. 
+              Energi ini diubah menjadi <strong>energi kimia</strong> <span class="en">(chemical energy)</span> yang tersimpan dalam 
+              molekul organik (gula, pati) di dalam apel. Ini adalah energi potensial kimia yang tersimpan dalam ikatan-ikatan kovalen.
+            </p>
+          </div>
+
+          <div class="scroll-box ember" style="margin: 14px 0;">
+            <h4>🍂 Fase 2: Apel Jatuh dari Pohon — Falling to the Ground</h4>
+            <p>
+              Apel yang menggantung di pohon memiliki <strong>energi potensial gravitasi</strong> <span class="en">(gravitational potential energy)</span>. 
+              Saat jatuh, energi potensial diubah menjadi <strong>energi kinetik</strong> <span class="en">(kinetic energy)</span>. 
+              Ketika menghantam tanah, energi kinetik berubah menjadi <strong>energi panas</strong> dan suara, 
+              menyebar ke lingkungan — meningkatkan entropi.
+            </p>
+          </div>
+
+          <div class="scroll-box sky" style="margin: 14px 0;">
+            <h4>🧑 Fase 3: Dicerna oleh Seseorang — Being Digested</h4>
+            <p>
+              Molekul organik dipecah melalui jalur katabolik <span class="en">(catabolic pathways)</span> seperti respirasi seluler. 
+              Energi kimia dilepaskan dan diubah menjadi:
+            </p>
+            <p>• <strong>ATP</strong> — energi kimia siap pakai untuk kerja sel</p>
+            <p>• <strong>Energi kinetik</strong> — gerakan otot, aktivitas sel <span class="en">(movement, cellular work)</span></p>
+            <p>• <strong>Energi panas</strong> <span class="en">(heat)</span> — sebagian besar terlepas ke lingkungan</p>
+          </div>
+
+          <div class="victory-box">
+            <strong>🏆 Ringkasan Transformasi:</strong><br>
+            Energi cahaya ☀️ → Energi kimia ⚗️ (di apel) → Energi potensial gravitasi 🏔️ (di pohon) 
+            → Energi kinetik ⚡ (jatuh) → Panas + Energi kimia (ATP) 
+            → Energi kinetik (kerja tubuh) + Panas<br>
+            <span class="en" style="font-size:14px; color:var(--text-muted);">
+              Light → Chemical → Gravitational potential → Kinetic → Heat + ATP → Kinetic + Heat
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quest-block" data-num="⚔️ QUEST 3 · WHAT IF?">
+        <div class="question-label" style="margin-top: 20px;">Pertanyaan — What If?</div>
+        <p class="question-text">
+          Jika kamu menaruh sesendok gula di dasar segelas air, gula itu akan larut seiring waktu. 
+          Namun jika dibiarkan lebih lama, air akan menguap dan kristal gula akan muncul kembali. 
+          Jelaskan pengamatan ini dalam istilah entropi!
+          <br><span class="en" style="font-size:14px;">"Explain these observations in terms of entropy."</span>
+        </p>
+        <div class="answer-label">✅ JAWABAN — ANSWER</div>
+        <div class="answer-text">
+
+          <div class="scroll-box green" style="margin: 14px 0;">
+            <h4>🔄 Fase 1: Gula Melarut — Sugar Dissolving (Spontaneous)</h4>
+            <p>
+              Gula melarut adalah proses spontan karena <strong>meningkatkan entropi sistem</strong> 
+              <span class="en">(increases entropy of the system)</span>. Molekul-molekul gula yang sebelumnya tersusun 
+              rapi dalam kristal kini tersebar secara acak di seluruh air. 
+              ΔG negatif → proses berlangsung tanpa input energi. 
+              Dari "teratur" menjadi "tidak teratur" — ini adalah arah favorit alam semesta.
+            </p>
+          </div>
+
+          <div class="scroll-box ember" style="margin: 14px 0;">
+            <h4>💨 Fase 2: Air Menguap, Kristal Kembali — Evaporation & Recrystallization</h4>
+            <p>
+              Ketika air dibiarkan terbuka, molekul air dengan energi kinetik tertinggi terus menguap ke udara 
+              — ini pun proses spontan karena meningkatkan entropi <em>keseluruhan sistem udara + larutan</em>. 
+              Seiring berkurangnya air, konsentrasi gula meningkat hingga kondisi lewat jenuh.
+            </p>
+            <p>
+              Munculnya kembali kristal gula <strong>bukan berarti entropi total turun secara melanggar hukum</strong>. 
+              Air yang menguap ke udara meningkatkan entropi lingkungan secara masif. 
+              Penurunan kecil entropi akibat pembentukan kristal <em>dikompensasi berlipat ganda</em> 
+              oleh peningkatan entropi dari penguapan air. Entropi total alam semesta tetap meningkat.
+            </p>
+          </div>
+
+          <div class="victory-box">
+            <strong>🏆 Kesimpulan Entropi:</strong><br>
+            Melarutnya gula = peningkatan entropi sistem (spontan ✓).<br>
+            Kristalisasi kembali gula terjadi karena penguapan air meningkatkan entropi lingkungan jauh lebih besar 
+            dari penurunan entropi akibat pembentukan kristal.<br>
+            <span class="en" style="font-size:14px; color:var(--text-muted);">
+              In both cases, the total entropy of the universe (system + surroundings) increases — consistent with the second law of thermodynamics.
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       LORE BOOK (GLOSSARY)
+  ══════════════════════════════════════ -->
+  <section id="lore">
+    <div class="stage-badge purple">📖 Stage IX · Lore Book</div>
+    <h2 class="section-title">Buku Pengetahuan — Key Terms Glossary</h2>
+    <div class="lore-grid">
+      <div class="lore-card">
+        <div class="lore-name">⚗️ Metabolisme</div>
+        <div class="lore-en">Metabolism</div>
+        <div class="lore-def">Totalitas seluruh reaksi kimia dalam organisme; sifat emergen kehidupan dari interaksi molekul.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🛤️ Jalur Metabolik</div>
+        <div class="lore-en">Metabolic Pathway</div>
+        <div class="lore-def">Rangkaian langkah reaksi kimia spesifik yang mengubah suatu molekul menjadi produk tertentu.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">⚡ Enzim</div>
+        <div class="lore-en">Enzyme</div>
+        <div class="lore-def">Makromolekul (umumnya protein) yang bertindak sebagai katalis biologis; mempercepat reaksi tanpa ikut habis.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🔴 Katabolisme</div>
+        <div class="lore-en">Catabolism</div>
+        <div class="lore-def">Jalur metabolik degradatif; memecah molekul kompleks menjadi sederhana, melepaskan energi.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🟢 Anabolisme</div>
+        <div class="lore-en">Anabolism</div>
+        <div class="lore-def">Jalur metabolik biosintesis; membangun molekul kompleks dari sederhana, mengonsumsi energi.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">💡 Energi</div>
+        <div class="lore-en">Energy</div>
+        <div class="lore-def">Kapasitas untuk menyebabkan perubahan; kemampuan untuk melakukan kerja.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">⚡ Energi Kinetik</div>
+        <div class="lore-en">Kinetic Energy</div>
+        <div class="lore-def">Energi yang terkait dengan gerakan relatif suatu objek terhadap objek lain.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🏔️ Energi Potensial</div>
+        <div class="lore-en">Potential Energy</div>
+        <div class="lore-def">Energi tersimpan karena posisi atau struktur benda; termasuk energi kimia.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">⚗️ Energi Kimia</div>
+        <div class="lore-en">Chemical Energy</div>
+        <div class="lore-def">Bentuk energi potensial; tersimpan dalam susunan elektron dalam ikatan kimia.</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🌡️ Termodinamika</div>
+        <div class="lore-en">Thermodynamics</div>
+        <div class="lore-def">Studi tentang transformasi energi dalam suatu sistem (kumpulan materi yang dipelajari).</div>
+      </div>
+      <div class="lore-card">
+        <div class="lore-name">🌀 Entropi (S)</div>
+        <div class="lore-en">Entropy</div>
+        <div class="lore-def">Ukuran ketidakteraturan atau kekacauan (disorder/randomness) molekuler dalam suatu sistem.</div>
+      </div>
+  </section>
+</div>
+
+<section id="istirahat">
+     <section id="istirahat">
+    <div>
+        <p>selesai konsep 8.1 masih ada 4 konsep lagi, lanjutttt?</p>
+    </div>
+
+    <a class="spotify-btn"
+       href="https://open.spotify.com/track/6pxf2SRlRfBwnQKcUZCm2s?si=9b05468ee1dc4a8e"
+       target="_blank">
+
+        <img src="spotify.png" alt="Spotify" width="30">
+    </a>
+        <div>
+        <p>close game & rest</p>
+    </div>
+
+</section>
+
+</section>
+
+
+<footer>
+  <p>⚗️ Chapter 8 — konsep 8.1 <span>Pengantar Metabolisme</span> · Campbell Biology · alay Edition</p>
+  <p style="margin-top: 6px;">"The adventure of understanding life is the greatest quest of all." 🧬</p>
+</footer>
+
+<script>
+  // Smooth scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('pgbar').style.width = progress + '%';
+  });
+
+  // Smooth scroll for TOC links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
